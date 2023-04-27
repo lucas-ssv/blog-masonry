@@ -1,3 +1,4 @@
+import { ContextProvider } from '@/contexts'
 import '@/styles/globals.css'
 import type { AppProps } from 'next/app'
 import { Roboto } from 'next/font/google'
@@ -10,7 +11,9 @@ const font = Roboto({
 export default function App ({ Component, pageProps }: AppProps) {
   return (
     <main className={font.className}>
-      <Component {...pageProps} />
+      <ContextProvider>
+        <Component {...pageProps} />
+      </ContextProvider>
     </main>
   )
 }
