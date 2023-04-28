@@ -1,16 +1,26 @@
-import { useContext } from 'react'
-import { Container } from '@mui/material'
+import { useEffect } from 'react'
+import { CircularProgress, Container } from '@mui/material'
 import { Header } from '@/components/Header'
 import { GridImage } from '@/components/GridImage'
-import { Context } from '@/contexts'
+import { fetchPhotos } from '@/store/fetchPhotos'
+import { useAppDispatch, useAppSelector } from '@/store'
 
 export default function Home () {
-  const { photos } = useContext(Context)
+  const state = useAppSelector(state => state)
+  const dispatch = useAppDispatch()
+
+  useEffect(() => {
+    dispatch(fetchPhotos())
+  }, [])
 
   return (
     <Container maxWidth='lg'>
       <Header />
-      <GridImage photos={photos} />
+      {state.loading ? (
+        <CircularProgress sx={{ mt: 50 }} />
+      ) : (
+        <GridImage photos={state.data} />
+      )}
     </Container>
   )
 }

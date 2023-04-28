@@ -1,7 +1,8 @@
-import { ContextProvider } from '@/contexts'
 import '@/styles/globals.css'
 import type { AppProps } from 'next/app'
 import { Roboto } from 'next/font/google'
+import { Provider } from 'react-redux'
+import { store } from '@/store'
 
 const font = Roboto({
   weight: ['400', '500', '700'],
@@ -11,9 +12,9 @@ const font = Roboto({
 export default function App ({ Component, pageProps }: AppProps) {
   return (
     <main className={font.className}>
-      <ContextProvider>
+      <Provider store={store}>
         <Component {...pageProps} />
-      </ContextProvider>
+      </Provider>
     </main>
   )
 }
