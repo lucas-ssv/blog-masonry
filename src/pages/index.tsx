@@ -1,26 +1,29 @@
 import { useEffect } from 'react'
-import { CircularProgress, Container } from '@mui/material'
+import { Container } from '@mui/material'
+import { useRecoilState } from 'recoil'
+import { api } from '@/services/api'
 import { Header } from '@/components/Header'
 import { GridImage } from '@/components/GridImage'
-import { fetchPhotos } from '@/store/fetchPhotos'
-import { useAppDispatch, useAppSelector } from '@/store'
+import { photosList } from '@/atoms'
 
 export default function Home () {
-  const state = useAppSelector(state => state)
-  const dispatch = useAppDispatch()
+  const [photos, setPhotos] = useRecoilState(photosList)
+
+  const fetchPhotos = async () => {
+    const photos = await api.get(
+      '?per_page=10&page=1&query=desk&orientation=landscape'
+    )
+    setPhotos(photos.data)
+  }
 
   useEffect(() => {
-    dispatch(fetchPhotos())
+    fetchPhotos()
   }, [])
 
   return (
     <Container maxWidth='lg'>
       <Header />
-      {state.loading ? (
-        <CircularProgress sx={{ mt: 50 }} />
-      ) : (
-        <GridImage photos={state.data} />
-      )}
+      <GridImage photos={photos} />
     </Container>
   )
 }

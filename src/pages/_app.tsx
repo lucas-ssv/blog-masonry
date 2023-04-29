@@ -2,6 +2,7 @@ import '@/styles/globals.css'
 import type { AppProps } from 'next/app'
 import { Roboto } from 'next/font/google'
 import { Provider } from 'react-redux'
+import { RecoilRoot } from 'recoil'
 import { store } from '@/store'
 
 const font = Roboto({
@@ -12,9 +13,9 @@ const font = Roboto({
 export default function App ({ Component, pageProps }: AppProps) {
   return (
     <main className={font.className}>
-      <Provider store={store}>
+      <RecoilRoot>
         <Component {...pageProps} />
-      </Provider>
+      </RecoilRoot>
     </main>
   )
 }
