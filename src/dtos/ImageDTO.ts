@@ -2,5 +2,5 @@ export type ImageDTO = {
   urls: {
     regular: string
   }
-  description: string
+  alt_description: string
 }
